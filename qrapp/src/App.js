@@ -16,7 +16,7 @@ class App extends Component {
   render () {
     return (
       <div>
-        <h1>QRScan Demo</h1>
+        <h1>Scan Desk QR code</h1>
         {this.state.watching
           ? (
             <QRScan onFind={this.onFind} />
