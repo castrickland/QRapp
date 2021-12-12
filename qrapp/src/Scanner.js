@@ -1,8 +1,8 @@
-import React, { Component, useState} from 'react'
+import React, { Component} from 'react'
 import QRScan from 'qrscan'
 
 
-
+var count = 0;
 class Scanner extends Component {
   
 
@@ -17,6 +17,15 @@ class Scanner extends Component {
   }
   
   render () {
+    if (count < 5) {
+      console.log(this.state.value)
+      //console.log(count + "<----")
+    }
+    
+    count = count + 1
+    
+    
+    
     return (
       <div>
         {this.state.watching
@@ -28,6 +37,7 @@ class Scanner extends Component {
               <button onClick={() => this.setState({ watching: true })}>Scan</button>
               <h4>value: {this.state.value}</h4>
             </div>
+            
             // read div on page to get round storing the
             // this.state.value 
           )
