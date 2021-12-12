@@ -1,52 +1,74 @@
 import DeskUnoccupied from "./logos/Desk.png"
 import DeskOccupied from "./logos/DeskOccupied.png"
-import { Component, useState } from "react";
+import { Component, useEffect, useState } from "react";
+import Axios from 'axios'
 
-class SeatPlan extends Component {
-    
-    constructor(props) {
-        super(props)
+function SeatPlan() {
+    const [isLoading, setLoading] = useState(true);
+    const [desk1Occupied, setDesk1Occupancy] = useState();
+    const [desk2Occupied, setDesk2Occupancy] = useState();
+    const [desk3Occupied, setDesk3Occupancy] = useState();
 
-        this.state = {
-            is1Occupied: true,
-            is2Occupied: false,
-            is3Occupied: true,
-            
-        }
-    }
-
-
-    render() {
-       
-        let desk1, desk2,  desk3;
-        if (this.state.is1Occupied == false) {
-            desk1 = <img src = {DeskUnoccupied} alt ="Desk001" height = "190px"/>
-            
-        } else {
-            desk1 = <img src = {DeskOccupied} alt ="Desk001" height = "190px"/>
-        }
-        if (this.state.is2Occupied == false) {
-            desk2 = <img src = {DeskUnoccupied} alt ="Desk002" height = "190px"/>
-            
-        } else {
-            desk2 = <img src = {DeskOccupied} alt ="Desk002" height = "190px"/>
-        }
-        if (this.state.is3Occupied == false) {
-            desk3 = <img src = {DeskUnoccupied} alt ="Desk003" height = "190px"/>
-            
-        } else {
-            desk3 = <img src = {DeskOccupied} alt ="Desk003" height = "190px"/>
-        }
+    useEffect(() => {
+        Axios.get("http://localhost:3001/deskData").then((response) => {
+            setDesk1Occupancy(response.data[0]);
+            setDesk2Occupancy(response.data[1]);
+            setDesk3Occupancy(response.data[2]);
+            setLoading(false);
+        
+        });
+        console.log(desk1Occupied)
+    },[]);
+    //Axios.get("http://localhost:3001/deskData").then((response) => {}
+    if (isLoading) {
         return (
-            <div>
-                
-                {desk1}
-                {desk2}
-                {desk3}
-            </div>
+            <div>...Loading</div>
         )
-      
-
     }
+    function returnSrc(occupancy) {
+        if (occupancy == 0){
+            // console.log({DeskUnoccupied})
+            // return {DeskUnoccupied}
+            return 1;
+        } else {
+            // console.log({DeskOccupied})
+            // return {DeskOccupied}
+            return 0;
+        }
+    }
+    
+    return (
+        
+        <div>
+            {/* <h1>{desk1Occupied.desk_occupied}</h1>
+            <h1>{desk2Occupied.desk_occupied}</h1>
+            <h1>{desk3Occupied.desk_occupied}</h1>
+            <img src = {source} alt = "desk001"/> */}
+            {/* <img src = {returnSrc(desk1Occupied.desk_occupied)}/> */}
+            <div>
+                {returnSrc(desk1Occupied.desk_occupied) ? (
+                     <img src = {DeskUnoccupied}/>
+                ) : (
+                    <img src = {DeskOccupied}/>
+                )}
+            </div>
+            <div>
+                {returnSrc(desk2Occupied.desk_occupied) ? (
+                     <img src = {DeskUnoccupied}/>
+                ) : (
+                    <img src = {DeskOccupied}/>
+                )}
+            </div>
+            <div>
+                {returnSrc(desk3Occupied.desk_occupied) ? (
+                     <img src = {DeskUnoccupied}/>
+                ) : (
+                    <img src = {DeskOccupied}/>
+                )}
+            </div>
+            
+        </div>
+    )
+
 }
 export default SeatPlan;
