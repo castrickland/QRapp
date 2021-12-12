@@ -17,7 +17,7 @@ function SeatPlan() {
             setLoading(false);
         
         });
-        console.log(desk1Occupied)
+        
     },[]);
     //Axios.get("http://localhost:3001/deskData").then((response) => {}
     if (isLoading) {
@@ -40,11 +40,7 @@ function SeatPlan() {
     return (
         
         <div>
-            {/* <h1>{desk1Occupied.desk_occupied}</h1>
-            <h1>{desk2Occupied.desk_occupied}</h1>
-            <h1>{desk3Occupied.desk_occupied}</h1>
-            <img src = {source} alt = "desk001"/> */}
-            {/* <img src = {returnSrc(desk1Occupied.desk_occupied)}/> */}
+            
             <div>
                 {returnSrc(desk1Occupied.desk_occupied) ? (
                      <img src = {DeskUnoccupied}/>
