@@ -1,13 +1,18 @@
 import React, { useState } from 'react'
 import "./App.css"
-import axios from 'axios'
+import Axios from 'axios'
 import Tabs from './Tabs'
 const App = () => {
     const [username, setUsername] = useState("");
-    const displayInfo = () => {
-      console.log(username)
+    //const [deskList, setDeskList] = useState()
+    // const displayInfo = () => {
+    //   console.log(username)
+    // }
+    const getDeskData = () => {
+      Axios.get("http://localhost:3001/deskData").then((response) => {
+          console.log(response);
+      })
     }
-    
     return (
       <div>
         <div className="login">
@@ -18,7 +23,7 @@ const App = () => {
               setUsername(event.target.value);
             }}
           />
-          <button onClick = {displayInfo}>Login</button>
+          <button onClick = {getDeskData}>Login</button>
         </div>
         
       <Tabs/>
