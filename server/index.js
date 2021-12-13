@@ -22,12 +22,19 @@ app.get('/deskData' , (req, res) => {
        } else {
            res.send(result)
        }
-
-       
     })
-
 })
-
+app.put('/deskUpdate' , (req, res) =>{
+    const desk_name = req.body.desk_name;
+    const desk_occupied = req.body.desk_occupied;
+    db.query("UPDATE desks SET desk_occupied = ? WHERE desk_name = ?", [desk_occupied, desk_name], (err, result) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.send(result)
+        }
+    });
+});
 
 app.listen(3001, ()=>{
     console.log("Server Running on port 3001")
